@@ -12,5 +12,6 @@ for sentence in sentences:
     tokens = word_tokenize(sentence)
     tagged_words = pos_tag(tokens)
 
+
     print("\nSentence:", sentence)
     print("POS Tags:", tagged_words)
