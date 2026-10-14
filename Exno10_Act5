@@ -1,0 +1,35 @@
+import nltk
+from nltk import word_tokenize, pos_tag, RegexpParser
+sentence = "The students in the computer laboratory study NLP."
+tokens = word_tokenize(sentence)
+tagged_words = pos_tag(tokens)
+
+# Original grammar
+grammar1 = r"""
+    NP: {<DT>?<JJ>*<NN.*>+}
+    PP: {<IN><NP>}
+    VP: {<VB.*><NP|PP>*}
+"""
+
+parser1 = RegexpParser(grammar1)
+tree1 = parser1.parse(tagged_words)
+
+print("POS Tagged Sentence:")
+print(tagged_words)
+
+print("\nOriginal Chunk Tree:")
+print(tree1)
+
+# Improved grammar: allow PP inside NP
+grammar2 = r"""
+    NP: {<DT>?<JJ>*<NN.*>+}
+    PP: {<IN><NP>}
+    NP: {<NP><PP>}
+    VP: {<VB.*><NP|PP>*}
+"""
+
+parser2 = RegexpParser(grammar2)
+tree2 = parser2.parse(tagged_words)
+
+print("\nImproved Chunk Tree:")
+print(tree2)
